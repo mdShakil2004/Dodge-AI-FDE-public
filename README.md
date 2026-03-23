@@ -44,6 +44,8 @@ Instead of 6+ SQL joins, a single graph query traces the full lifecycle of an or
 | Frontend       | https://dodge-ai-fde.vercel.app          |
 | Health check   | https://dodge-ai-fde-backend.onrender.com/checking/health      |
 
+
+
 ## Screenshots
 
 > Graph view showing the full O2C path: Customer → Order → Delivery → Invoice → Payment
