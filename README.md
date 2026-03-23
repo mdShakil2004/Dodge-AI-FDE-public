@@ -333,21 +333,6 @@ node src/ingest.js
 ```
 
 
-```
-
-4. Deploy
-
-#### One code change required before deploying frontend
-
-In `frontend/src/components/Chat.jsx` line 3, change:
-
-```js
-// Before
-const API_URL = "http://localhost:4000";
-
-// After
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
-```
 
 This is the only code change needed for deployment. Everything else reads from environment variables.
 
