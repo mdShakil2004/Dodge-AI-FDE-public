@@ -13,13 +13,6 @@ SAP Order-to-Cash data is distributed across multiple tables and modules:
 - Payments
 - other 
 
-Answering simple business questions requires:
-- complex SQL joins  
-- deep schema knowledge  
-- engineering dependency  
-
-This creates bottlenecks for business teams.
-
 ** Customer → SalesOrder → Delivery → Billing → JournalEntry → Payment
 
 This enables:
@@ -266,54 +259,9 @@ frontend/
 
 ---
 
-## Local Development
 
-### Prerequisites
 
-- Node.js 20+
-- Neo4j Desktop (local) or Neo4j AuraDB (cloud free tier)
-- OpenRouter API key — [openrouter.ai](https://openrouter.ai) (free)
 
-### 1. Clone and install
-
-```bash
-git clone https://github.com/your-username/grapho2c.git
-cd grapho2c
-
-# Backend
-cd backend
-npm install
-
-# Frontend
-cd ../frontend
-npm install
-```
-
-### 2. Configure environment
-
-Create `backend/.env`:
-
-```dotenv
-# Neo4j — local
-NEO4J_URI=neo4j://127.0.0.1:7687
-NEO4J_USER=neo4j
-NEO4J_PASS=your_local_password
-
-# LLM
-OPENROUTER_API_KEY=sk-or-xxxxxxxxxxxxxxxx
-
-# Optional tuning
-NODE_ENV=development
-PORT=4000
-NEO4J_QUERY_TIMEOUT_MS=120000
-INGEST_BATCH_SIZE=500
-```
-
-Create `frontend/.env.local`:
-
-```dotenv
-VITE_API_URL=http://localhost:4000
-```
 
 ### 3. Ingest data
 
@@ -334,13 +282,12 @@ Expected output:
 [ingest:init] Found 49 JSONL file(s) under: ...
 [ingest:init] Loaded 21,393 total rows from 49 files
 ...
-[ingest:done] Ingestion complete. {"elapsed":"72.8s","processed":5013,"errors":"none"}
 ```
 
 ### 4. Start backend
 
 ```bash
-git clone 
+git clone https://github.com/mdShakil2004/Dodge-AI-FDE-public.git
 cd backend
 npm start
 # Server running on http://localhost:4000
@@ -349,7 +296,7 @@ npm start
 ### 5. Start frontend
 
 ```bash
-git clone 
+git clone https://github.com/mdShakil2004/Dodge-AI-FDE-public.git
 cd frontend
 npm run dev
 # App running on http://localhost:5173
@@ -357,14 +304,7 @@ npm run dev
 
 ---
 
-## Deployment
 
-### Backend → Railway
-
-1. Push to GitHub
-2. [railway.app](https://railway.app) → New Project → Deploy from GitHub → select `backend/`
-3. Set Start Command: `node src/server.js`
-4. Add environment variables in Railway dashboard:
 
 ```dotenv
 NEO4J_URI=neo4j+s://xxxxxxxx.databases.neo4j.io
