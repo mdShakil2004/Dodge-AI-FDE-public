@@ -32,9 +32,7 @@ Graph-based modeling provides:
 - simplified query structure  
 - alignment with real business workflows  
 
-Example:
 
-Instead of 6+ SQL joins, a single graph query traces the full lifecycle of an order
 ---
 
 ## Live Demo
@@ -45,6 +43,7 @@ Instead of 6+ SQL joins, a single graph query traces the full lifecycle of an or
 | Health check   | https://dodge-ai-fde-backend.onrender.com/checking/health      |
 
 
+---
 
 ## Screenshots
 
