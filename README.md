@@ -4,21 +4,71 @@
 
 GraphO2C transforms fragmented SAP Order-to-Cash relational data into a unified **Neo4j knowledge graph** and lets you query it in plain English. Type a question, the system converts it to Cypher via an LLM, executes it against Neo4j, and visualises the result as an interactive graph or data table.
 
+SAP Order-to-Cash data is distributed across multiple tables and modules:
+
+- Sales Orders  
+- Deliveries  
+- Billing Documents  
+- Accounting Entries  
+- Payments
+- other 
+
+Answering simple business questions requires:
+- complex SQL joins  
+- deep schema knowledge  
+- engineering dependency  
+
+This creates bottlenecks for business teams.
+
+** Customer → SalesOrder → Delivery → Billing → JournalEntry → Payment
+
+This enables:
+- intuitive data traversal  
+- real-time query answering  
+- natural language access via LLM  
+
+---
+
+## 🔥 Why Graph?
+
+Traditional relational queries require multiple joins across systems.
+
+Graph-based modeling provides:
+
+- direct relationship traversal  
+- simplified query structure  
+- alignment with real business workflows  
+
+Example:
+
+Instead of 6+ SQL joins, a single graph query traces the full lifecycle of an order
 ---
 
 ## Live Demo
 
-| Layer | URL |
-|---|---|
-| Frontend | `https://your-app.vercel.app` |
-| Backend API | `https://your-app.railway.app` |
-| Health check | `https://your-app.railway.app/health` |
-
----
+| Layer          | URL                                      |
+|----------------|------------------------------------------|
+| Frontend       | https://dodge-ai-fde.vercel.app          |
+| Health check   | https://dodge-ai-fde-backend.onrender.com/checking/health      |
 
 ## Screenshots
 
 > Graph view showing the full O2C path: Customer → Order → Delivery → Invoice → Payment
+
+<img width="1520" height="800" alt="image" src="https://github.com/user-attachments/assets/e2fe1378-e0ae-4ce7-834a-59460e109e29" />
+
+<img width="1520" height="800" alt="image" src="https://github.com/user-attachments/assets/74a2fb4d-f80d-43d6-b97b-0fe84f6634e2" />
+
+## Graph View 
+   <img width="1520" height="800" alt="image" src="https://github.com/user-attachments/assets/d3c68540-c0f1-480b-8bbc-075705f5b72e" />
+   
+## Table View
+  <img width="1520" height="800" alt="image" src="https://github.com/user-attachments/assets/3e31f994-5fa1-41e6-9a20-0b94bdc719a8" />
+
+
+
+
+
 
 ---
 
@@ -30,7 +80,7 @@ GraphO2C transforms fragmented SAP Order-to-Cash relational data into a unified 
 │                                 │     │                                   │
 │  React + React Flow             │────▶│  Express API  (server.js)        │
 │  Chat UI  (Chat.jsx)            │     │  Guardrails   (guardrails.js)    │
-│  Graph    (Graph.jsx)           │◀────│  LLM Layer    (llm.js)           │
+│  Graph    (Graph.jsx)           │◀────│  LLM Layer    (llm.js)          │
 │  DataTable                      │     │  Validator    (query.js)         │
 │                                 │     │  Neo4j Driver (db.js)            │
 └─────────────────────────────────┘     └────────────────┬─────────────────┘
@@ -38,7 +88,7 @@ GraphO2C transforms fragmented SAP Order-to-Cash relational data into a unified 
                                                          ▼
                                         ┌──────────────────────────────────┐
                                         │     Neo4j AuraDB (cloud)         │
-                                        │                                   │
+                                        │                                  │
                                         │  8 node types · 8 rel types      │
                                         │  Customer → SalesOrder →         │
                                         │  Delivery → BillingDocument →    │
@@ -59,6 +109,33 @@ User question
 [5] Neo4j execution       — 120s timeout, 200 row cap
 [6] Response              — { data, explanation, count, elapsed_ms }
 ```
+
+---
+
+1. User enters natural language query  
+2. Input validation + guardrails  
+3. LLM converts → Cypher  
+4. Query validated against schema  
+5. Executed on Neo4j  
+6. Results returned as graph + table  
+
+---
+
+## 🧱 Graph Schema
+
+### Nodes
+- Customer  
+- SalesOrder  
+- Delivery  
+- BillingDocument  
+- JournalEntry  
+- Payment  
+- Product  
+- Plant  
+
+### Relationships
+
+
 
 ---
 
@@ -263,14 +340,16 @@ Expected output:
 ### 4. Start backend
 
 ```bash
+git clone 
 cd backend
-npm run dev
+npm start
 # Server running on http://localhost:4000
 ```
 
 ### 5. Start frontend
 
 ```bash
+git clone 
 cd frontend
 npm run dev
 # App running on http://localhost:5173
@@ -313,14 +392,7 @@ set DATA_DIR=.\SAP Order-to-Cash-dataset
 node src/ingest.js
 ```
 
-### Frontend → Vercel
 
-1. [vercel.com](https://vercel.com) → New Project → Import from GitHub → select `frontend/`
-2. Framework Preset: **Vite** (auto-detected)
-3. Add environment variable:
-
-```dotenv
-VITE_API_URL=https://your-app.railway.app
 ```
 
 4. Deploy
